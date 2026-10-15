@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Discern</title>
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top" id="top">
+    <div class="wrap top-in">
+      <a class="brand" href="/"><span class="wordmark"><b>Disc</b>ern</span><span class="brand-sub">Optic disc analysis</span></a>
+      <nav class="topnav">
+        <a href="/analyze" aria-current="page">Analyze</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="intake" class="intake">
+      <h1 data-aos="fade-up">Analyze a fundus photo</h1>
+      <p class="sub" data-aos="fade-up" data-aos-delay="60">The optic disc and cup are outlined and the cup-to-disc ratio is measured.</p>
+
+      <label id="consentRow" class="check" data-aos="fade-up" data-aos-delay="120" hidden>
+        <input id="consent" type="checkbox">
+        <span id="consentText"></span>
+      </label>
+      <div id="uploadError" class="note bad" hidden></div>
+
+      <label id="dropzone" class="well" data-aos="fade-up" data-aos-delay="180" tabindex="0" aria-label="Upload a fundus photograph">
+        <input id="fileInput" type="file" accept="image/*,.dcm,application/dicom" hidden>
+        <span class="well-circle" aria-hidden="true"></span>
+        <img id="wellPreview" class="well-preview" alt="" hidden>
+        <span id="wellIdle" class="well-text">
+          <span class="well-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></span>
+          <strong>Drop a fundus photograph</strong>
+          <span class="mono">JPG · PNG · DICOM</span>
+          <button id="pickBtn" class="btn btn-ink" type="button">Choose file</button>
+        </span>
+        <span id="wellProgress" class="well-status" hidden><span id="wellStep"></span><span id="wellName"></span></span>
+        <span id="wellBar" class="well-bar" aria-hidden="true" hidden><i></i></span>
+      </label>
+
+    </section>
+
+    <section id="case" class="case" hidden>
+      <button id="newBtn" class="back" type="button"></button>
+      <div class="case-head">
+        <div>
+          <h1 id="caseTitle"></h1>
+          <div id="caseMeta" class="case-meta"></div>
+        </div>
+        <button id="copyLink" class="btn btn-line" type="button"></button>
+      </div>
+
+      <div class="case-grid">
+        <div>
+          <div class="stage">
+            <span class="frame" aria-hidden="true"></span>
+            <span id="hudView" class="hud tl" aria-hidden="true"></span>
+            <span id="hudSize" class="hud tr" aria-hidden="true"></span>
+            <img id="mainImg" alt="Fundus photograph">
+            <div id="legend" class="stage-legend">
+              <span><i class="sw disc"></i>Optic disc</span>
+              <span><i class="sw cup"></i>Optic cup</span>
+            </div>
+          </div>
+          <div id="film" class="film" role="group" aria-label="Image view"></div>
+        </div>
+
+        <aside class="panel report">
+          <div id="notes" class="sec notes" hidden></div>
+          <div id="asdSec" class="sec"></div>
+          <div id="onhSec" class="sec">
+            <div class="sec-head"><span class="eyebrow">Optic nerve head</span></div>
+            <div class="mtiles">
+              <div class="mtile"><span>Vertical CDR</span><b id="vcdr">—</b><i class="mbar"><i id="vcdrBar"></i></i></div>
+              <div class="mtile"><span>Horizontal CDR</span><b id="hcdr">—</b><i class="mbar"><i id="hcdrBar"></i></i></div>
+              <div class="mtile"><span>Area CDR</span><b id="acdr">—</b><i class="mbar"><i id="acdrBar"></i></i></div>
+              <div class="mtile"><span>Disc diameter</span><b id="diam">—</b><small>pixels in the original</small></div>
+            </div>
+            <p class="fine" style="margin-top:12px">CDR is cup size divided by disc size. The paper uses it as a post-processing measure when exploring links with ASD.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span class="wordmark"><b>Disc</b>ern</span>
+      <span>© 2026</span>
+    </footer>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="/static/common.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

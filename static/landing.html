@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Discern · Optic disc analysis from a phone</title>
+  <meta name="description" content="A 3D-printed smartphone fundus adapter and a web app that segments the optic disc and cup, measures the cup-to-disc ratio and estimates ASD severity for research.">
+  <meta property="og:title" content="Discern">
+  <meta property="og:description" content="A phone, a printed lens, and the optic disc, measured.">
+  <meta property="og:image" content="/static/landing/photo-mounted-front.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link rel="stylesheet" href="/static/landing.css">
+  <link rel="preload" as="image" href="/static/landing/photo-capture.jpg">
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="/"><span class="wordmark"><b>Disc</b>ern</span></a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#hardware">Hardware</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#demo">See it run</a>
+        <a href="#tech">Technology</a>
+      </nav>
+      <a class="btn btn-dark btn-sm nav-cta" href="/analyze" data-warm>Open the app <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="wrap hero-in">
+        <div class="hero-copy">
+          <h1 data-aos="fade-up">Optic disc analysis, <em>from a phone.</em></h1>
+          <p class="lead" data-aos="fade-up" data-aos-delay="80">A 3D-printed lens turns a smartphone into a fundus camera. Discern outlines the disc and cup and measures them.</p>
+          <div class="hero-cta" data-aos="fade-up" data-aos-delay="160">
+            <a class="btn btn-key" href="#demo">
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 1.6v8.8L10 6z" fill="currentColor"/></svg>
+              Watch it work
+            </a>
+            <a class="btn btn-line" href="/analyze" data-warm>Open the app</a>
+          </div>
+        </div>
+
+        <figure class="hero-media" data-aos="fade" data-aos-delay="200" data-aos-duration="900">
+          <div class="media-card main">
+            <img src="/static/landing/photo-capture.jpg" alt="A smartphone in the 3D-printed adapter, with an eye visible on the camera screen through the lens" width="750" height="1071">
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <span class="eyebrow" data-aos="fade-up">The challenge</span>
+        <h2 data-aos="fade-up">The signal sits in a small disc at the back of the eye.</h2>
+        <p class="sub" data-aos="fade-up">The paper this app reproduces relates the optic nerve head to ASD severity. Using that outside a lab takes two things: a retinal photo that can be taken anywhere, and a disc measurement that does not depend on who is looking.</p>
+        <div class="challenge">
+          <div class="photo" data-aos="fade-up"><img src="/static/landing/photo-mounted-front.jpg" alt="Phone mounted in the adapter, the camera view looking down the lens barrel" loading="lazy" width="896" height="886"></div>
+          <div class="card list hard" data-aos="fade-up" data-aos-delay="80">
+            <h3>// Hard</h3>
+            <ul>
+              <li>Desktop fundus cameras are large and stay in the clinic</li>
+              <li>The optic disc fills only a small part of the photograph</li>
+              <li>Disc and cup boundaries are easy to misjudge by eye</li>
+              <li>A model score on its own is not a result</li>
+            </ul>
+          </div>
+          <div class="card list good" data-aos="fade-up" data-aos-delay="160">
+            <h3>// Answered</h3>
+            <ul>
+              <li>A 3D-printed adapter turns a smartphone into the camera</li>
+              <li>The disc is found, cropped and segmented again at higher zoom</li>
+              <li>Cup-to-disc ratios are computed from the masks, not eyeballed</li>
+              <li>Results can be held until an administrator reviews them</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tint" id="hardware">
+      <div class="wrap">
+        <span class="eyebrow" data-aos="fade-up">The hardware</span>
+        <h2 data-aos="fade-up">A fundus camera, printed and clipped to a phone.</h2>
+        <p class="sub" data-aos="fade-up">A lens barrel with an eyecup and focusing rings sits on a 3D-printed sliding clamp that holds the phone camera in line with the optics. It went through several designs to get here.</p>
+        <div class="bento">
+          <figure class="tile render tall" data-aos="fade-up">
+            <img src="/static/landing/render-exploded.webp" alt="Exploded render of the adapter" loading="lazy" width="733" height="1100">
+            <figcaption><span>Exploded view</span><b>Eyecup, focus rings, threaded barrel, clamp</b></figcaption>
+          </figure>
+          <figure class="tile render" data-aos="fade-up" data-aos-delay="50">
+            <img src="/static/landing/render-assembled.webp" alt="Render of the assembled adapter" loading="lazy" width="1200" height="943">
+            <figcaption><span>Final assembly</span><b>Barrel locked onto the sliding clamp</b></figcaption>
+          </figure>
+          <figure class="tile photo" data-aos="fade-up" data-aos-delay="100">
+            <img src="/static/landing/photo-mounted-angle.jpg" alt="The adapter mounted on a smartphone" loading="lazy" width="1074" height="901">
+            <figcaption><span>Mounted</span><b>On a smartphone</b></figcaption>
+          </figure>
+          <figure class="tile photo" data-aos="fade-up" data-aos-delay="150">
+            <img src="/static/landing/photo-lens-top.jpg" alt="Lens barrel and eyecup on the clamp" loading="lazy" width="804" height="1060">
+            <figcaption><span>Optics</span><b>Lens barrel and eyecup</b></figcaption>
+          </figure>
+          <figure class="tile render wide" data-aos="fade-up" data-aos-delay="50">
+            <img src="/static/landing/render-sliding-tube.webp" alt="Renders of the universal sliding tube" loading="lazy" width="1400" height="642">
+            <figcaption><span>Universal sliding tube</span><b>Slides to line up with the phone camera</b></figcaption>
+          </figure>
+          <figure class="tile photo" data-aos="fade-up" data-aos-delay="100">
+            <img src="/static/landing/prototype-early.jpg" alt="Red 3D-printed early prototype" loading="lazy" width="1400" height="1224">
+            <figcaption><span>Early prototype</span><b>The first printed holder</b></figcaption>
+          </figure>
+          <figure class="tile render wide" data-aos="fade-up">
+            <img src="/static/landing/render-parts.webp" alt="Renders of the parts of the original rod design" loading="lazy" width="1400" height="945">
+            <figcaption><span>Original rod design</span><b>Printed as separate parts</b></figcaption>
+          </figure>
+          <figure class="tile render" data-aos="fade-up" data-aos-delay="50">
+            <img src="/static/landing/render-fine-focus.webp" alt="Render of the rod-mounted fine-focus add-on" loading="lazy" width="1000" height="923">
+            <figcaption><span>Add-on</span><b>Rod-mounted fine focus</b></figcaption>
+          </figure>
+          <figure class="tile photo" data-aos="fade-up" data-aos-delay="100">
+            <img src="/static/landing/photo-mounted-side.jpg" alt="Side view of the phone in the adapter" loading="lazy" width="1100" height="795">
+            <figcaption><span>Side view</span><b>Phone, clamp and barrel</b></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pipeline">
+      <div class="wrap">
+        <span class="eyebrow" data-aos="fade-up">The pipeline</span>
+        <h2 data-aos="fade-up">From a phone photo to a reviewed result.</h2>
+        <ol class="steps">
+          <li class="card" data-aos="fade-up">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><circle cx="12" cy="9" r="3"/><path d="M10.5 18h3"/></svg></span>
+              <span class="step-n">01</span>
+            </div>
+            <b>Capture</b>
+            <p>Photograph the retina through the adapter, then upload a JPG, PNG or DICOM from any browser.</p>
+          </li>
+          <li class="card" data-aos="fade-up" data-aos-delay="80">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/></svg></span>
+              <span class="step-n">02</span>
+            </div>
+            <b>Segment</b>
+            <p>SegFormer-B3 finds the optic disc, crops around it and outlines the disc and cup again at higher zoom.</p>
+          </li>
+          <li class="card" data-aos="fade-up" data-aos-delay="160">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 20 4"/><path d="m7 17 2 2m1-5 2 2m1-5 2 2m1-5 2 2"/></svg></span>
+              <span class="step-n">03</span>
+            </div>
+            <b>Measure &amp; score</b>
+            <p>Vertical, horizontal and area cup-to-disc ratios; features of the disc region feed the ASD severity model.</p>
+          </li>
+          <li class="card" data-aos="fade-up" data-aos-delay="240">
+            <div class="step-top">
+              <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <span class="step-n">04</span>
+            </div>
+            <b>Review</b>
+            <p>An administrator checks the outlines and the severity, corrects them if needed, and releases the result.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section tint" id="demo">
+      <div class="wrap center">
+        <span class="eyebrow" data-aos="fade-up">Live app</span>
+        <h2 data-aos="fade-up">See it run.</h2>
+        <p class="sub" data-aos="fade-up">Recorded in the app: one photo analysed end to end, then the same case reviewed by an administrator.</p>
+        <div class="demo" data-aos="fade-up">
+          <div class="tabs" role="tablist" aria-label="Recording">
+            <button type="button" role="tab" aria-selected="true" aria-controls="demoImg" data-demo="analyze">Analyze a photo</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="demoImg" data-demo="review">Admin review</button>
+          </div>
+          <div class="window">
+            <div class="window-bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="url"><svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="5.5" width="7" height="5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span id="demoUrl">discern-eye.vercel.app/analyze</span></span>
+              <span class="dots" aria-hidden="true" style="visibility:hidden"><i></i><i></i><i></i></span>
+            </div>
+            <div class="window-body">
+              <img id="demoImg" role="tabpanel" src="/static/landing/demo-analyze.gif" alt="Recording: consent is ticked, a fundus photo is uploaded, the optic disc and cup are segmented and the cup-to-disc ratios appear" loading="lazy" width="960" height="600">
+            </div>
+          </div>
+          <p class="demo-cap" id="demoCap">Tick consent, upload, and the disc and cup are outlined and measured. The film strip switches between the zoomed outline, the masks and the full photo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tech">
+      <div class="wrap">
+        <span class="eyebrow" data-aos="fade-up">What it took</span>
+        <h2 data-aos="fade-up">From a printed part to a deployed model.</h2>
+        <ol class="timeline">
+          <li data-aos="fade-up">
+            <div class="tl-meta"><span class="tl-n">01</span><span class="tl-cat">Hardware</span></div>
+            <div class="tl-body">
+              <h3>Print the adapter</h3>
+              <p>A first holder, then a rod design, then a sliding tube that lines the phone camera up with the lens.</p>
+              <div class="tl-thumbs"><img src="/static/landing/prototype-early.jpg" alt="Early printed holder" loading="lazy"><img src="/static/landing/render-parts.webp" alt="Parts of the rod design" loading="lazy" class="contain"><img src="/static/landing/render-assembled.webp" alt="Final assembly" loading="lazy" class="contain"></div>
+            </div>
+          </li>
+          <li data-aos="fade-up">
+            <div class="tl-meta"><span class="tl-n">02</span><span class="tl-cat">Segmentation</span></div>
+            <div class="tl-body">
+              <h3>Find the disc and cup</h3>
+              <p>SegFormer-B3, trained on REFUGE, runs on the whole photo and again on a crop around the disc.</p>
+              <ul class="tags"><li>SegFormer-B3</li><li>REFUGE</li><li>Two passes</li></ul>
+            </div>
+          </li>
+          <li data-aos="fade-up">
+            <div class="tl-meta"><span class="tl-n">03</span><span class="tl-cat">Measurement</span></div>
+            <div class="tl-body">
+              <h3>Measure the ratios</h3>
+              <p>Vertical, horizontal and area cup-to-disc ratios and disc diameter, computed from the masks.</p>
+              <ul class="tags"><li>Cup-to-disc ratio</li><li>Disc size</li></ul>
+            </div>
+          </li>
+          <li data-aos="fade-up">
+            <div class="tl-meta"><span class="tl-n">04</span><span class="tl-cat">Severity</span></div>
+            <div class="tl-body">
+              <h3>Score ASD severity</h3>
+              <p>ResNet-50 features of the disc region feed a small network trained only on labels an administrator approved.</p>
+              <ul class="tags"><li>ResNet-50</li><li>MLP</li><li>Retrains every 20 labels</li></ul>
+            </div>
+          </li>
+          <li data-aos="fade-up">
+            <div class="tl-meta"><span class="tl-n">05</span><span class="tl-cat">Review</span></div>
+            <div class="tl-body">
+              <h3>Close the loop</h3>
+              <p>Admins confirm or correct the outlines and the severity. Corrections are collected to fine-tune the segmenter.</p>
+              <ul class="tags"><li>Admin review</li><li>Outline correction</li></ul>
+            </div>
+          </li>
+          <li data-aos="fade-up">
+            <div class="tl-meta"><span class="tl-n">06</span><span class="tl-cat">Deployment</span></div>
+            <div class="tl-body">
+              <h3>Ship it</h3>
+              <p>Both models run on CPU with ONNX Runtime in Singapore. Uploads and reviews are stored in Postgres.</p>
+              <ul class="tags"><li>ONNX Runtime</li><li>Vercel · Singapore</li><li>Neon Postgres</li></ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" style="border-bottom:0; padding-bottom: 64px">
+      <div class="wrap">
+        <div class="cta" data-aos="fade-up">
+          <div>
+            <h2>Try it with a fundus photo.</h2>
+            <p>Upload a JPG, PNG or DICOM. The disc and cup are outlined right away; severity is released according to the administrator's settings.</p>
+          </div>
+          <div class="row">
+            <a class="btn btn-key" href="/analyze" data-warm>Open the app</a>
+            <a class="btn btn-line" href="/admin">Admin</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="wrap">
+    <footer class="foot">
+      <span class="wordmark"><b>Disc</b>ern</span>
+      <span>© 2026</span>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    (() => {
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const nav = document.getElementById("nav");
+      const onScroll = () => nav.classList.toggle("scrolled", scrollY > 8);
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      if (window.AOS) AOS.init({ duration: 700, easing: "ease-out-cubic", once: true, offset: 40, disable: reduce });
+      else document.querySelectorAll("[data-aos]").forEach((el) => el.removeAttribute("data-aos"));
+
+      const demos = {
+        analyze: {
+          src: "/static/landing/demo-analyze.gif",
+          url: "discern-eye.vercel.app/analyze",
+          alt: "Recording: consent is ticked, a fundus photo is uploaded, the optic disc and cup are segmented and the cup-to-disc ratios appear",
+          cap: "Tick consent, upload, and the disc and cup are outlined and measured. The film strip switches between the zoomed outline, the masks and the full photo.",
+        },
+        review: {
+          src: "/static/landing/demo-review.gif",
+          url: "discern-eye.vercel.app/admin",
+          alt: "Recording: an administrator corrects the cup outline, sets severity to Moderate and approves the case",
+          cap: "The reviewer tightens the cup outline, sets severity to Moderate (64%) and approves. The uploader's page then shows the released result.",
+        },
+      };
+      const img = document.getElementById("demoImg");
+      const tabs = document.querySelectorAll("[data-demo]");
+      tabs.forEach((tab) => tab.addEventListener("click", () => {
+        const d = demos[tab.dataset.demo];
+        tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+        img.src = d.src;
+        img.alt = d.alt;
+        document.getElementById("demoUrl").textContent = d.url;
+        document.getElementById("demoCap").textContent = d.cap;
+      }));
+      img.addEventListener("load", () => { new Image().src = demos.review.src; }, { once: true });
+
+      let warmed = false;
+      document.querySelectorAll("[data-warm]").forEach((a) => {
+        const warm = () => { if (!warmed) { warmed = true; fetch("/api/warmup").catch(() => {}); } };
+        a.addEventListener("pointerenter", warm);
+        a.addEventListener("focus", warm);
+        a.addEventListener("touchstart", warm, { passive: true });
+      });
+    })();
+  </script>
+</body>
+</html>

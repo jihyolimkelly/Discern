@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · Discern</title>
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top" id="top">
+    <div class="wrap top-in">
+      <a class="brand" href="/"><span class="wordmark"><b>Disc</b>ern</span><span class="brand-sub">Admin</span></a>
+      <nav class="topnav">
+        <a href="/analyze">Analyze</a>
+        <a href="/admin" aria-current="page">Admin</a>
+        <button id="logoutBtn" type="button" hidden>Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="login" class="login" hidden>
+      <form id="loginForm">
+        <div>
+          <span class="eyebrow">Administrator</span>
+          <h1 style="margin-top:8px">Sign in</h1>
+          <p>Review incoming cases and decide how ASD results are released.</p>
+        </div>
+        <label class="field"><span>Password</span><input id="password" class="input" type="password" autocomplete="current-password" required></label>
+        <button class="btn btn-ink" type="submit">Sign in</button>
+        <p id="loginError" class="form-error" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="dash" hidden>
+      <div class="page-head">
+        <div>
+          <h1>Admin</h1>
+          <p>Every upload is stored as a case. Approving a case releases its ASD result and adds it to the training set.</p>
+        </div>
+        <div class="head-side">
+          <span id="modelStatus"></span>
+          <button id="refreshBtn" class="btn btn-line btn-sm" type="button">Refresh</button>
+        </div>
+      </div>
+
+      <div id="dbWarning" class="note wait" style="margin-top:20px" hidden>The database is temporary: cases are lost whenever the server restarts. Connect a Postgres database (DATABASE_URL) to keep them.</div>
+
+      <div class="subnav" role="tablist">
+        <button role="tab" data-view="cases" aria-selected="true">Cases</button>
+        <button role="tab" data-view="model" aria-selected="false">Model</button>
+        <button role="tab" data-view="settings" aria-selected="false">Settings</button>
+      </div>
+
+      <div id="casesView">
+        <div class="toolbar" style="display:block">
+          <div class="filters" role="tablist" aria-label="Filter cases">
+            <button role="tab" data-filter="pending" aria-selected="true"><span class="status wait">Awaiting review</span><span class="count" id="nPending">0</span></button>
+            <button role="tab" data-filter="approved" aria-selected="false"><span class="status ok">Approved</span><span class="count" id="nApproved">0</span></button>
+            <button role="tab" data-filter="rejected" aria-selected="false"><span class="status bad">Rejected</span><span class="count" id="nRejected">0</span></button>
+            <button role="tab" data-filter="all" aria-selected="false"><span class="status">All cases</span><span class="count" id="nTotal">0</span></button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Case</th>
+                  <th class="hide-sm">Received</th>
+                  <th class="hide-sm r">Vertical CDR</th>
+                  <th>ASD</th>
+                  <th class="hide-sm">Status</th>
+                  <th class="hide-sm">Label</th>
+                  <th class="r">Review</th>
+                </tr>
+              </thead>
+              <tbody id="caseRows"></tbody>
+            </table>
+          </div>
+          <div id="emptyState" class="empty" hidden></div>
+          <div id="tableFoot" class="table-foot">
+            <span id="rangeText"></span>
+            <button id="moreBtn" class="btn btn-line btn-sm" type="button" hidden>Load more</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="settingsView" class="settings" hidden>
+        <form id="settingsForm" class="panel">
+          <div class="sec">
+            <div class="sec-head"><h2>ASD result release</h2></div>
+            <p>What the person who uploaded an image sees. Segmentation and CDR are always shown.</p>
+            <div class="options">
+              <label class="option">
+                <input type="radio" name="asd_release" value="review">
+                <span><b>After admin approval<em>Default</em></b>
+                <small>Shows “Awaiting review” until an administrator approves the case and picks a severity. Only the reviewer’s assessment is released.</small></span>
+              </label>
+              <label class="option">
+                <input type="radio" name="asd_release" value="immediate">
+                <span><b>Immediately</b>
+                <small>Shows model probabilities as soon as the image is analyzed, before anyone reviews it. Needs a trained severity model.</small></span>
+              </label>
+              <label class="option">
+                <input type="radio" name="asd_release" value="off">
+                <span><b>Off</b>
+                <small>Never shows an ASD result. Cases are still stored and can be reviewed here.</small></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-head"><h2>Provisional estimate</h2><span id="aiStatus"></span></div>
+            <p>Until a severity model has been trained, a general AI model gives a placeholder estimate. It is never used as training data.</p>
+            <label class="check"><input id="aiEstimate" type="checkbox"><span>Show a provisional estimate while no trained model exists</span></label>
+          </div>
+
+          <div class="sec">
+            <div class="sec-head"><h2>Consent</h2></div>
+            <p>Every upload is stored in the database. Ask uploaders to agree to that first.</p>
+            <label class="check"><input id="requireConsent" type="checkbox"><span>Require consent before an image can be uploaded</span></label>
+            <label class="field"><span>Consent statement</span><textarea id="consentText" class="input" maxlength="1000" rows="3"></textarea></label>
+          </div>
+
+          <div class="sec form-actions">
+            <span id="savedMsg" class="saved" hidden>Saved</span>
+            <button class="btn btn-ink" type="submit">Save settings</button>
+          </div>
+        </form>
+
+        <div class="panel">
+          <div class="sec">
+            <div class="sec-head"><span class="eyebrow">System</span></div>
+            <dl id="systemInfo" class="readout"></dl>
+          </div>
+        </div>
+      </div>
+
+      <div id="modelView" class="settings" hidden>
+        <div class="panel">
+          <div class="sec">
+            <div class="sec-head"><h2>Active model</h2><span id="activeTag"></span></div>
+            <div id="activeModel"></div>
+          </div>
+          <div class="sec">
+            <div class="sec-head"><h2>History</h2></div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr><th>Model</th><th class="hide-sm">Trained</th><th class="r">Cases</th><th class="hide-sm">Trigger</th><th></th></tr>
+                </thead>
+                <tbody id="modelRows"></tbody>
+              </table>
+            </div>
+            <div id="modelEmpty" class="empty" hidden><b>No models yet</b>Train one once enough cases are labelled.</div>
+          </div>
+        </div>
+
+        <div style="display:grid;gap:24px">
+          <div class="panel">
+            <div class="sec">
+              <div class="sec-head"><span class="eyebrow">New labels</span><span id="newLabelsTag"></span></div>
+              <dl id="labelCounts" class="readout"></dl>
+              <p id="newLabels" class="fine" style="margin:12px 0 14px"></p>
+              <button id="trainBtn" class="btn btn-ink" type="button" style="width:100%">Train and activate now</button>
+              <p id="trainReason" class="fine" style="margin-top:10px" hidden></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="drawer" class="drawer" hidden>
+    <div class="drawer-bg" data-close></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+      <header class="drawer-head">
+        <div><div id="dTitle" class="mono"></div><div id="dMeta" class="fine"></div></div>
+        <button id="closeBtn" class="btn btn-text btn-sm" type="button" data-close aria-label="Close"></button>
+      </header>
+      <div id="dBody" class="drawer-body"></div>
+      <footer class="drawer-foot">
+        <button id="deleteBtn" class="btn btn-bad btn-sm" type="button">Delete case</button>
+        <a id="openPublic" class="btn btn-text btn-sm" target="_blank" rel="noopener">Open uploader view ↗</a>
+      </footer>
+    </aside>
+  </div>
+
+  <div id="segEditor" class="modal" hidden>
+    <div class="modal-bg" data-seg-cancel></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="segTitle">
+      <header class="modal-head">
+        <div>
+          <h2 id="segTitle">Correct optic disc and cup</h2>
+          <p class="fine">Drag inside an outline to move it and the square handles to resize it. In the whole image, click where the disc really is.</p>
+        </div>
+        <div class="modal-tools">
+          <div class="pick pick-sm" role="group" aria-label="Outline to edit">
+            <button type="button" data-part="disc" aria-pressed="true"><i class="sw disc"></i> Disc</button>
+            <button type="button" data-part="cup" aria-pressed="false"><i class="sw cup"></i> Cup</button>
+          </div>
+          <button id="segWhole" class="btn btn-line btn-sm" type="button">Whole image</button>
+        </div>
+      </header>
+      <div class="canvas-wrap"><canvas id="segCanvas"></canvas></div>
+      <footer class="modal-foot">
+        <span id="segReadout" class="fine mono"></span>
+        <div class="review-actions">
+          <button class="btn btn-text" type="button" data-seg-cancel>Cancel</button>
+          <button id="segSave" class="btn btn-ink" type="button">Save correction</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/static/common.js"></script>
+  <script src="/static/admin.js"></script>
+</body>
+</html>

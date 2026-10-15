@@ -1,0 +1,10 @@
+fastapi
+python-multipart
+uvicorn
+onnxruntime
+numpy
+pillow
+sqlalchemy>=2.0
+psycopg[binary]
+itsdangerous
+pydicom
