@@ -17,17 +17,17 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
   <link rel="stylesheet" href="/static/landing.css">
-  <link rel="preload" as="image" href="/static/landing/photo-capture.jpg">
+  <link rel="preload" as="image" href="/static/landing/hardware.jpg">
 </head>
 <body>
   <header class="nav" id="nav">
     <div class="wrap nav-in">
       <a class="brand" href="/"><span class="wordmark"><b>Disc</b>ern</span></a>
       <nav class="nav-links" aria-label="Sections">
+        <a href="#motivation">Motivation</a>
         <a href="#hardware">Hardware</a>
-        <a href="#pipeline">Pipeline</a>
-        <a href="#demo">See it run</a>
-        <a href="#tech">Technology</a>
+        <a href="#field">Field tests</a>
+        <a href="#contact">Contact</a>
       </nav>
       <a class="btn btn-dark btn-sm nav-cta" href="/analyze" data-warm>Open the app <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
@@ -39,7 +39,7 @@
       <div class="wrap hero-in">
         <div class="hero-copy">
           <h1 data-aos="fade-up">Optic disc analysis, <em>from a phone.</em></h1>
-          <p class="lead" data-aos="fade-up" data-aos-delay="80">A 3D-printed lens turns a smartphone into a fundus camera. Discern outlines the disc and cup and measures them.</p>
+          <p class="lead" data-aos="fade-up" data-aos-delay="80">A 3D-printed lens turns a smartphone into a fundus camera. Discern calculates cup-to-disc ratios to predict ASD severity through machine learning, with an expert-review interface to correct predictions and improve the model over time.</p>
           <div class="hero-cta" data-aos="fade-up" data-aos-delay="160">
             <a class="btn btn-key" href="#demo">
               <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 1.6v8.8L10 6z" fill="currentColor"/></svg>
@@ -51,39 +51,27 @@
 
         <figure class="hero-media" data-aos="fade" data-aos-delay="200" data-aos-duration="900">
           <div class="media-card main">
-            <img src="/static/landing/photo-capture.jpg" alt="A smartphone in the 3D-printed adapter, with an eye visible on the camera screen through the lens" width="750" height="1071">
+            <img src="/static/landing/hardware.jpg" alt="The finished camera: a lens barrel with a focus ring on a 3D-printed sliding phone clamp" width="895" height="1119">
           </div>
         </figure>
       </div>
     </section>
 
-    <section class="section">
-      <div class="wrap">
-        <span class="eyebrow" data-aos="fade-up">The challenge</span>
-        <h2 data-aos="fade-up">The signal sits in a small disc at the back of the eye.</h2>
-        <p class="sub" data-aos="fade-up">The paper this app reproduces relates the optic nerve head to ASD severity. Using that outside a lab takes two things: a retinal photo that can be taken anywhere, and a disc measurement that does not depend on who is looking.</p>
-        <div class="challenge">
-          <div class="photo" data-aos="fade-up"><img src="/static/landing/photo-mounted-front.jpg" alt="Phone mounted in the adapter, the camera view looking down the lens barrel" loading="lazy" width="896" height="886"></div>
-          <div class="card list hard" data-aos="fade-up" data-aos-delay="80">
-            <h3>// Hard</h3>
-            <ul>
-              <li>Desktop fundus cameras are large and stay in the clinic</li>
-              <li>The optic disc fills only a small part of the photograph</li>
-              <li>Disc and cup boundaries are easy to misjudge by eye</li>
-              <li>A model score on its own is not a result</li>
-            </ul>
-          </div>
-          <div class="card list good" data-aos="fade-up" data-aos-delay="160">
-            <h3>// Answered</h3>
-            <ul>
-              <li>A 3D-printed adapter turns a smartphone into the camera</li>
-              <li>The disc is found, cropped and segmented again at higher zoom</li>
-              <li>Cup-to-disc ratios are computed from the masks, not eyeballed</li>
-              <li>Results can be held until an administrator reviews them</li>
-            </ul>
-          </div>
+    <section class="motivation" id="motivation">
+      <article class="split">
+        <div class="split-media">
+          <img src="/static/landing/photo-mounted-front.jpg" alt="Phone mounted in the adapter, the camera view looking down the lens barrel" loading="lazy">
         </div>
-      </div>
+        <div class="split-text">
+          <span class="eyebrow" data-aos="fade-up">Motivation</span>
+          <h3 data-aos="fade-up">Retinal imaging shouldn't stay inside the hospital.</h3>
+          <ol class="points">
+            <li data-aos="fade-up"><span>01</span><div><b>Access</b><p>Retinal cameras are large and expensive, so retinal photos are mostly taken in hospitals.</p></div></li>
+            <li data-aos="fade-up" data-aos-delay="80"><span>02</span><div><b>Research</b><p>My previous research found a correlation between optic cup-to-disc ratios and autism severity, which inspired me to develop Discern to measure these features consistently.</p></div></li>
+            <li data-aos="fade-up" data-aos-delay="160"><span>03</span><div><b>Reach</b><p>A 3D-printed camera and Discern can make retinal imaging more accessible to underserved communities without expensive retinal imaging equipment.</p></div></li>
+          </ol>
+        </div>
+      </article>
     </section>
 
     <section class="section tint" id="hardware">
@@ -177,7 +165,7 @@
       <div class="wrap center">
         <span class="eyebrow" data-aos="fade-up">Live app</span>
         <h2 data-aos="fade-up">See it run.</h2>
-        <p class="sub" data-aos="fade-up">Recorded in the app: one photo analysed end to end, then the same case reviewed by an administrator.</p>
+        <p class="sub" data-aos="fade-up">Watch Discern analyze a retinal image from start to finish, followed by an administrator reviewing and correcting the AI predictions.</p>
         <div class="demo" data-aos="fade-up">
           <div class="tabs" role="tablist" aria-label="Recording">
             <button type="button" role="tab" aria-selected="true" aria-controls="demoImg" data-demo="analyze">Analyze a photo</button>
@@ -198,6 +186,70 @@
       </div>
     </section>
 
+    <section class="field" id="field">
+      <div class="wrap field-head">
+        <span class="eyebrow" data-aos="fade-up">Field tests</span>
+        <h2 data-aos="fade-up">Out of the workshop, into classrooms and clinics.</h2>
+      </div>
+
+      <article class="split">
+        <div class="split-media">
+          <video src="/static/landing/field/ph-loop.mp4" poster="/static/landing/field/ph-loop.jpg" autoplay muted loop playsinline preload="metadata" aria-label="The camera held to a student's eye at a school in the Philippines"></video>
+        </div>
+        <div class="split-text">
+          <span class="place" data-aos="fade-up">School &middot; Philippines</span>
+          <h3 data-aos="fade-up">Testing Discern with students at Bright Beginnings School.</h3>
+          <p data-aos="fade-up">At Bright Beginnings SPED School in the Philippines, students tried the camera with teachers’ assistance, and reviewed the retinal images using Discern.</p>
+        </div>
+      </article>
+      <div class="strip">
+        <img src="/static/landing/field/ph-teachers.jpg" alt="Going through Discern with teachers" loading="lazy">
+        <img src="/static/landing/field/ph-imaging-2.jpg" alt="The camera held to a student's eye" loading="lazy">
+        <img src="/static/landing/field/ph-laptop.jpg" alt="Reviewing a photo in Discern on a laptop" loading="lazy">
+      </div>
+      <div class="call">
+        <div class="wrap">
+          <span class="place" data-aos="fade-up">Video call &middot; Philippines</span>
+          <h3 data-aos="fade-up">Explaining Discern’s camera design and functionality to our partner in the Philippines.</h3>
+          <img src="/static/landing/field/ph-call.jpg" width="1976" height="649" alt="A video call: the hardware section of the Discern site is shared on screen with notes drawn on the exploded view, next to the two participants" loading="lazy" data-aos="fade-up">
+        </div>
+      </div>
+
+      <article class="split reverse">
+        <div class="split-media">
+          <img src="/static/landing/field/korea-imaging.jpg" style="object-position: 50% 72%" alt="A physician steadies a young patient while the camera is held up to the child's eye" loading="lazy">
+        </div>
+        <div class="split-text">
+          <span class="place" data-aos="fade-up">Hospital &middot; South Korea</span>
+          <h3 data-aos="fade-up">The camera was tested with a young patient under Dr. Choi’s supervision at Nasaret International Hospital.</h3>
+          <p data-aos="fade-up">Dr. Choi provided clinical guidance throughout the camera’s development. During testing at Nasaret International Hospital, he supervised retinal imaging on a young patient to assess image quality and reviewed the results in Discern.</p>
+        </div>
+      </article>
+      <div class="strip">
+        <img src="/static/landing/field/korea-feedback.jpg" alt="Showing the camera to the physician" loading="lazy">
+        <img src="/static/landing/field/korea-imaging-2.jpg" alt="The camera held to a child's eye while the physician steadies the child" loading="lazy">
+        <img src="/static/landing/field/korea-review.jpg" alt="The physician reviewing a Discern result on a laptop" loading="lazy">
+      </div>
+    </section>
+
+    <section class="voices" id="voices">
+      <div class="wrap center">
+        <span class="eyebrow" data-aos="fade-up">Testimonials</span>
+        <h2 data-aos="fade-up">In their own words.</h2>
+        <p class="sub" data-aos="fade-up">Teacher Interviews at Bright Beginnings SPED School, Philippines</p>
+      </div>
+      <div class="wrap voices-row">
+        <figure class="voice" data-aos="fade-up">
+          <img src="/static/landing/field/teacher-1.jpg" width="720" height="1276" alt="A teacher holding the camera during an interview at Bright Beginnings SPED School" loading="lazy">
+          <blockquote>&ldquo;We were really impressed by how simple and affordable it is. We think it could help a lot of children.&rdquo;</blockquote>
+        </figure>
+        <figure class="voice flip" data-aos="fade-up" data-aos-delay="100">
+          <img src="/static/landing/field/teacher-2.jpg" width="720" height="1269" alt="A teacher with the camera on the table during an interview at Bright Beginnings SPED School" loading="lazy">
+          <blockquote>&ldquo;This could really change things for kids in our community.&rdquo;</blockquote>
+        </figure>
+      </div>
+    </section>
+
     <section class="section" id="tech">
       <div class="wrap">
         <span class="eyebrow" data-aos="fade-up">What it took</span>
@@ -207,7 +259,7 @@
             <div class="tl-meta"><span class="tl-n">01</span><span class="tl-cat">Hardware</span></div>
             <div class="tl-body">
               <h3>Print the adapter</h3>
-              <p>A first holder, then a rod design, then a sliding tube that lines the phone camera up with the lens.</p>
+              <p>Started with a simple phone holder, then a rod-based design and a sliding tube before the final rotating focus ring and adjustable phone clamp.</p>
               <div class="tl-thumbs"><img src="/static/landing/prototype-early.jpg" alt="Early printed holder" loading="lazy"><img src="/static/landing/render-parts.webp" alt="Parts of the rod design" loading="lazy" class="contain"><img src="/static/landing/render-assembled.webp" alt="Final assembly" loading="lazy" class="contain"></div>
             </div>
           </li>
@@ -215,7 +267,7 @@
             <div class="tl-meta"><span class="tl-n">02</span><span class="tl-cat">Segmentation</span></div>
             <div class="tl-body">
               <h3>Find the disc and cup</h3>
-              <p>SegFormer-B3, trained on REFUGE, runs on the whole photo and again on a crop around the disc.</p>
+              <p>SegFormer-B3 first identifies the optic disc in the full retinal image, then analyzes a cropped region at higher resolution to refine the optic disc and cup boundaries.</p>
               <ul class="tags"><li>SegFormer-B3</li><li>REFUGE</li><li>Two passes</li></ul>
             </div>
           </li>
@@ -223,7 +275,7 @@
             <div class="tl-meta"><span class="tl-n">03</span><span class="tl-cat">Measurement</span></div>
             <div class="tl-body">
               <h3>Measure the ratios</h3>
-              <p>Vertical, horizontal and area cup-to-disc ratios and disc diameter, computed from the masks.</p>
+              <p>Discern automatically calculates vertical, horizontal, and area cup-to-disc ratios, along with optic disc diameter, using the segmented masks.</p>
               <ul class="tags"><li>Cup-to-disc ratio</li><li>Disc size</li></ul>
             </div>
           </li>
@@ -231,7 +283,7 @@
             <div class="tl-meta"><span class="tl-n">04</span><span class="tl-cat">Severity</span></div>
             <div class="tl-body">
               <h3>Score ASD severity</h3>
-              <p>ResNet-50 features of the disc region feed a small network trained only on labels an administrator approved.</p>
+              <p>ResNet-50 extracts features from the optic disc region, which are passed to an MLP classifier for ASD severity prediction. The classifier is retrained using expert-reviewed labels.</p>
               <ul class="tags"><li>ResNet-50</li><li>MLP</li><li>Retrains every 20 labels</li></ul>
             </div>
           </li>
@@ -255,17 +307,16 @@
       </div>
     </section>
 
-    <section class="section" style="border-bottom:0; padding-bottom: 64px">
-      <div class="wrap">
-        <div class="cta" data-aos="fade-up">
-          <div>
-            <h2>Try it with a fundus photo.</h2>
-            <p>Upload a JPG, PNG or DICOM. The disc and cup are outlined right away; severity is released according to the administrator's settings.</p>
-          </div>
-          <div class="row">
-            <a class="btn btn-key" href="/analyze" data-warm>Open the app</a>
-            <a class="btn btn-line" href="/admin">Admin</a>
-          </div>
+    <section class="contact" id="contact">
+      <div class="wrap center">
+        <span class="eyebrow" data-aos="fade-up">Contact</span>
+        <h2 data-aos="fade-up">Want to collaborate, or have a question?</h2>
+        <p class="sub" data-aos="fade-up">Send an email to</p>
+        <div class="mail" data-aos="fade-up">
+          <a href="mailto:kellyjhlim716@gmail.com">
+            <span class="mail-icon"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="mail-addr">kellyjhlim716@gmail.com</span>
+          </a>
         </div>
       </div>
     </section>

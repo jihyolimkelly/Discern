@@ -1,5 +1,8 @@
 # Discern
 
+> **Note on Repository History**  
+> This project has been used as a prototype by real-world institutions, including schools and hospitals. As the original development history contains information that cannot be publicly disclosed, the full Git history is not available in this repository. For privacy and security reasons, a separate public version of the repository has been prepared.
+
 Segments the optic disc and cup in a fundus photo, measures the cup-to-disc ratio, and gives an ASD severity estimate that an admin reviews. Research use only, not a diagnosis.
 
 ## Run locally
